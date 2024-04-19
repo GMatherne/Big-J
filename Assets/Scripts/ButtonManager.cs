@@ -16,4 +16,12 @@ public class ButtonManager : MonoBehaviour
     public void SettingsPressed(){
        
     }
+
+    public void MenuBackPressed(){
+
+    }
+
+    public void GameBackPressed(){
+        
+    }
 }
