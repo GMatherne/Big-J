@@ -123,6 +123,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &39750891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 39750894}
+  - component: {fileID: 39750892}
+  - component: {fileID: 39750893}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &39750892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39750891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4009427e334095d4baf02c59cc1b0454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &39750893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39750891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b811cba156cb8c24ca02cc8831648731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &39750894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39750891}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &66246650
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,8 +809,6 @@ GameObject:
   - component: {fileID: 429957333}
   - component: {fileID: 429957332}
   - component: {fileID: 429957331}
-  - component: {fileID: 429957330}
-  - component: {fileID: 429957335}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -761,18 +816,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &429957330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 429957329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4009427e334095d4baf02c59cc1b0454, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &429957331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -869,18 +912,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &429957335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 429957329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b811cba156cb8c24ca02cc8831648731, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &581448812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,9 +1152,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 429957335}
+      - m_Target: {fileID: 39750893}
         m_TargetAssemblyTypeName: SliderManager, Assembly-CSharp
-        m_MethodName: SetSensitivity
+        m_MethodName: SetYSensitivity
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1804,7 +1835,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 429957330}
+      - m_Target: {fileID: 39750892}
         m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
         m_MethodName: MenuBackPressed
         m_Mode: 1
@@ -2300,7 +2331,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 429957335}
+      - m_Target: {fileID: 39750893}
         m_TargetAssemblyTypeName: SliderManager, Assembly-CSharp
         m_MethodName: SetSoundEffectsVolume
         m_Mode: 0
@@ -2699,9 +2730,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 429957335}
+      - m_Target: {fileID: 39750893}
         m_TargetAssemblyTypeName: SliderManager, Assembly-CSharp
-        m_MethodName: SetSensitivity
+        m_MethodName: SetXSensitivity
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3137,7 +3168,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 429957335}
+      - m_Target: {fileID: 39750893}
         m_TargetAssemblyTypeName: SliderManager, Assembly-CSharp
         m_MethodName: SetMusicVolume
         m_Mode: 0
@@ -3357,5 +3388,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1484878515}
   - {fileID: 1544103823}
+  - {fileID: 39750894}
   - {fileID: 429957334}
   - {fileID: 2028768228}

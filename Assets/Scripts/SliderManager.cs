@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SliderManager : MonoBehaviour
@@ -9,7 +7,7 @@ public class SliderManager : MonoBehaviour
     }
 
     public void SetYSensitivity(float sens){
-        
+
     }
 
     public void SetMusicVolume(float volume){
