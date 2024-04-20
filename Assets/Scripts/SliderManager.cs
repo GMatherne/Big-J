@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class SliderManager : MonoBehaviour
@@ -7,6 +9,9 @@ public class SliderManager : MonoBehaviour
     public Slider ySensitivitySlider;
     public Slider soundEffectsVolumeSlider;
     public Slider musicVolumeSlider;
+
+    public AudioMixer soundEffectsMixer;
+    public AudioMixer musicMixer;
 
     private void Start(){
         xSensitivitySlider.value = GameManager.xSensitivityMultiplier;
@@ -23,11 +28,13 @@ public class SliderManager : MonoBehaviour
         GameManager.ySensitivityMultiplier = sensitivity;
     }
 
-    public void SetMusicVolume(float volume){
-        GameManager.musicVolume = volume;
-    }
-
     public void SetSoundEffectsVolume(float volume){
         GameManager.soundEffectsVolume = volume;
+        soundEffectsMixer.SetFloat("SoundEffectsMixerVolume", MathF.Log10(volume) * 20f);
+    }
+
+    public void SetMusicVolume(float volume){
+        GameManager.musicVolume = volume;
+        musicMixer.SetFloat("MusicMixerVolume", MathF.Log10(volume) * 20f);
     }
 }

@@ -1,5 +1,6 @@
-using System.Runtime.Serialization;
+using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,14 +14,20 @@ public class GameManager : MonoBehaviour
     public static float xSensitivityMultiplier;
     public static float ySensitivityMultiplier;
 
+    public AudioMixer soundEffectsMixer;
+    public AudioMixer musicMixer;
+
     private void Start(){
         levelsUnlocked = 1;
 
-        musicVolume = 1f;
-        soundEffectsVolume = 1f;
+        musicVolume = 0.5f;
+        soundEffectsVolume = 0.5f;
         
         xSensitivityMultiplier = 1.05f;
         ySensitivityMultiplier = 1.05f;
+
+        soundEffectsMixer.SetFloat("SoundEffectsMixerVolume", MathF.Log10(0.5f) * 20f);
+        musicMixer.SetFloat("MusicMixerVolume", MathF.Log10(0.5f) * 20f);
     }
 
     private void Awake()

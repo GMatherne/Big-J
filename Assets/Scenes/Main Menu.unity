@@ -929,11 +929,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc33d9cce487ca4abdce812a35ff883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelsUnlocked: 1
-  musicVolume: 1
-  soundEffectsVolume: 1
-  xSensitivityMultiplier: 1.05
-  ySensitivityMultiplier: 1.05
+  soundEffectsMixer: {fileID: 24100000, guid: 356377c953d00c44fa0a76dd820bf3e2, type: 2}
+  musicMixer: {fileID: 24100000, guid: 83b79016bd6271b4091da1dd4fc716be, type: 2}
 --- !u!4 &1342596800
 Transform:
   m_ObjectHideFlags: 0
