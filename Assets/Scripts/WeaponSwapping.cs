@@ -14,6 +14,10 @@ public class WeaponSwapping : MonoBehaviour
 
     private void Update(){
         
+        if(!GameManager.ableToSwapWeapon){
+            return;
+        }
+
         int previousWeapon = selectedWeapon;
 
         if(Input.GetAxis("Mouse ScrollWheel") > 0f){
@@ -38,6 +42,10 @@ public class WeaponSwapping : MonoBehaviour
 
         if(previousWeapon != selectedWeapon){
             SelectWeapon();
+
+            GameManager.ableToShoot = false;
+            Invoke(nameof(ResetShot), GameManager.weaponSwapShootingCooldown);
+
         }
 
     }
@@ -55,5 +63,9 @@ public class WeaponSwapping : MonoBehaviour
             i++;
         }
 
+    }
+
+    private void ResetShot(){
+        GameManager.ableToShoot = true;
     }
 }

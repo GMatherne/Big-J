@@ -12,7 +12,6 @@ public class GunSystem : MonoBehaviour
     public bool fullyAutomatic;
 
     private bool shooting;
-    private bool readyToShoot;
 
     public new Camera camera;
     public Transform attackPoint;
@@ -22,7 +21,7 @@ public class GunSystem : MonoBehaviour
     public GameObject muzzleFlash;
 
     private void Start(){
-        readyToShoot = true;
+        Invoke(nameof(ResetShot), GameManager.weaponSwapShootingCooldown);
     }
 
     private void Update(){
@@ -37,7 +36,7 @@ public class GunSystem : MonoBehaviour
             shooting = Input.GetKeyDown(GameManager.shootKey);
         }
 
-        if(readyToShoot && shooting){
+        if(GameManager.ableToShoot && shooting){
             Shoot();
         }
 
@@ -45,7 +44,8 @@ public class GunSystem : MonoBehaviour
 
     private void Shoot(){
 
-        readyToShoot = false;
+        GameManager.ableToSwapWeapon = false;
+        GameManager.ableToShoot = false;
 
         float xBulletSpread = Random.Range(-spread, spread);
         float yBulletSpread = Random.Range(-spread, spread);
@@ -73,7 +73,8 @@ public class GunSystem : MonoBehaviour
     }
 
     private void ResetShot(){
-        readyToShoot = true;
+        GameManager.ableToShoot = true;
+        GameManager.ableToSwapWeapon = true;
     }
 
 }

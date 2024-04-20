@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     public static KeyCode pauseKey = KeyCode.Escape;
     public static KeyCode shootKey = KeyCode.Mouse0;
 
+    public static bool ableToSwapWeapon;
+    public static float weaponSwapShootingCooldown;
+    public static bool ableToShoot;
+
     private void Start(){
         levelsUnlocked = 1;
 
@@ -33,6 +37,10 @@ public class GameManager : MonoBehaviour
 
         soundEffectsMixer.SetFloat("SoundEffectsMixerVolume", MathF.Log10(0.5f) * 20f);
         musicMixer.SetFloat("MusicMixerVolume", MathF.Log10(0.5f) * 20f);
+
+        weaponSwapShootingCooldown = 0.2f;
+        ableToSwapWeapon = true;
+        ableToShoot = false;
     }
 
     private void Awake()
