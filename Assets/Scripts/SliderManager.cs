@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class SliderManager : MonoBehaviour
 {
-    public void SetSensitivity(float sens){
+    public void SetXSensitivity(float sens){
 
+    }
+
+    public void SetYSensitivity(float sens){
+        
     }
 
     public void SetMusicVolume(float volume){
