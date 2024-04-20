@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
 
     public static bool paused;
 
+    public static KeyCode pauseKey = KeyCode.Escape;
+    public static KeyCode shootKey = KeyCode.Mouse0;
+
     private void Start(){
         levelsUnlocked = 1;
 

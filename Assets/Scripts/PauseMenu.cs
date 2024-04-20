@@ -7,9 +7,10 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject pauseScreen;
     public GameObject settingsScreen;
+    public GameObject reticle;
 
     private void Update(){
-        if(Input.GetKeyDown(KeyCode.Escape)){
+        if(Input.GetKeyDown(GameManager.pauseKey)){
             if(GameManager.paused){
                 Resume();
             }else{
@@ -31,6 +32,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = true;
 
         pauseMenuUI.SetActive(true);
+        reticle.SetActive(false);
         
         Time.timeScale = 0f;
 
@@ -41,6 +43,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         settingsScreen.SetActive(false);
         pauseScreen.SetActive(true);
+        reticle.SetActive(true);
         
         Time.timeScale = 1f;
 
