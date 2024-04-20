@@ -16,8 +16,8 @@ public class CameraMovement : MonoBehaviour
     }
 
     private void Update(){
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * XSens;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * YSens;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * XSens * GameManager.xSensitivityMultiplier;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * YSens * GameManager.ySensitivityMultiplier;
 
         YRotation += mouseX;
         XRotation -= mouseY;
