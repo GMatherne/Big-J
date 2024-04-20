@@ -3,35 +3,23 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
-    public void QuitPressed(){
+    public static void QuitPressed(){
        Application.Quit();
     }
 
-    public void PlayPressed(){
+    public static void PlayPressed(){
         SceneManager.LoadScene("Level Select");
     }
 
-    public void SettingsPressed(){
+    public static void SettingsPressed(){
        SceneManager.LoadScene("Settings");
     }
 
-    public void MenuBackPressed(){
+    public static void BackPressed(){
         SceneManager.LoadScene("Main Menu");
     }
 
-    public void GameBackPressed(){
-        SceneManager.LoadScene("Level Select");
-    }
-
-    public void ResumePressed(){
-
-    }
-
-    public void RestartPressed(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void LevelPressed(string level){
+    public static void LevelPressed(string level){
 
         string name = "Level ";
 
@@ -42,5 +30,8 @@ public class ButtonManager : MonoBehaviour
         name += level;
 
         SceneManager.LoadScene(name);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

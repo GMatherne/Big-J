@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public AudioMixer soundEffectsMixer;
     public AudioMixer musicMixer;
 
+    public static bool paused;
+
     private void Start(){
         levelsUnlocked = 1;
 
