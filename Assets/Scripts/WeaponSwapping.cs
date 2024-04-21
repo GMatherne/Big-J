@@ -13,7 +13,7 @@ public class WeaponSwapping : MonoBehaviour
 
     private void Update(){
         
-        if(!GameManager.ableToSwapWeapon){
+        if(!GameManager.ableToSwapWeapon || GameManager.paused){
             return;
         }
         

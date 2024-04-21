@@ -9,12 +9,16 @@ public class EnemyAI : MonoBehaviour
 
     public GameObject projectile;
 
+    public GameObject enemy;
+    private Renderer enemyRenderer;
+    private float redValue;
+
     public LayerMask ground;
     public LayerMask playerLayer;
 
-    public Vector3 patrolPoint;
-    private bool patrolPointSet;
-    public float patrolRange;
+    public Vector3 searchPoint;
+    private bool searchPointSet;
+    public float searchRange;
 
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
@@ -25,12 +29,16 @@ public class EnemyAI : MonoBehaviour
     private bool playerInSightRange;
     private bool playerInAttackRange;
 
-    public float health;
+    private float health;
+    public float totalHealth;
 
     private void Awake(){
 
+        redValue = 0f;
+        health = totalHealth;
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        enemyRenderer = enemy.GetComponent<Renderer>();
 
     }
 
@@ -40,7 +48,7 @@ public class EnemyAI : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
         if(!playerInSightRange && !playerInAttackRange){
-            Patrolling();
+            Searching();
         }else if(playerInSightRange && !playerInAttackRange){
             ChasePlayer();
         }else{
@@ -48,31 +56,32 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void Patrolling(){
+    private void Searching(){
 
-        if(!patrolPointSet){
-            SearchPatrolPoint();
+        if(!searchPointSet){
+            SearchPoint();
         }
 
-        if(patrolPointSet){
-            agent.SetDestination(patrolPoint);
+        if(searchPointSet){
+            agent.SetDestination(searchPoint);
         }
 
-        Vector3 distanceToPatrolPoint = transform.position - patrolPoint;
+        Vector3 distanceTosearchPoint = transform.position - searchPoint;
 
-        if(distanceToPatrolPoint.magnitude < 1f){
-            patrolPointSet = false;
+        if(distanceTosearchPoint.magnitude < 1f){
+            searchPointSet = false;
         }
     }
 
-    private void SearchPatrolPoint(){
-        float randomZ = Random.Range(-patrolRange, patrolRange);
-        float randomX = Random.Range(-patrolRange, patrolRange);
+    private void SearchPoint(){
 
-        patrolPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        float randomZ = Random.Range(-searchRange, searchRange);
+        float randomX = Random.Range(-searchRange, searchRange);
+
+        searchPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
    
-        if(Physics.Raycast(patrolPoint, -transform.up, 2f, ground)){
-            patrolPointSet = true;
+        if(Physics.Raycast(searchPoint, -transform.up, 2f, ground)){
+            searchPointSet = true;
         }
     }
 
@@ -104,12 +113,21 @@ public class EnemyAI : MonoBehaviour
 
     public void TakeDamage(int damage){
 
+        enemyRenderer.material.SetColor("_Color", new Color(1f, 0f, 0f));
+
         health -= damage;
 
         if(health <= 0){
-            Invoke(nameof(DestroyEnemy), .5f);
+            health = 0;
+            Invoke(nameof(DestroyEnemy), .1f);
         }
 
+        Invoke(nameof(ChangeColor), .1f);
+    }
+
+    private void ChangeColor(){
+        redValue = 1 - health/totalHealth;
+        enemyRenderer.material.SetColor("_Color", new Color(redValue, 0f, 0f));
     }
 
     private void DestroyEnemy(){

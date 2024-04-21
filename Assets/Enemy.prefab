@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 7078474883814084775}
   - component: {fileID: 6352712219834581202}
   - component: {fileID: 3123969506579261970}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,18 +124,19 @@ MonoBehaviour:
   agent: {fileID: 3123969506579261970}
   player: {fileID: 0}
   projectile: {fileID: 7885646598552639062, guid: d6354da93f48c434587b37a31ea807e4, type: 3}
+  enemy: {fileID: 2456101521912813178}
   ground:
     serializedVersion: 2
     m_Bits: 8
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  patrolPoint: {x: 0, y: 0, z: 0}
-  patrolRange: 5
+  searchPoint: {x: 0, y: 0, z: 0}
+  searchRange: 10
   timeBetweenAttacks: 0.5
   sightRange: 20
   attackRange: 12
-  health: 20
+  totalHealth: 20
 --- !u!195 &3123969506579261970
 NavMeshAgent:
   m_ObjectHideFlags: 0
