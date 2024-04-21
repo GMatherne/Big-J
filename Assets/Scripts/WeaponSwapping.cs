@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class WeaponSwapping : MonoBehaviour
@@ -17,7 +16,7 @@ public class WeaponSwapping : MonoBehaviour
         if(!GameManager.ableToSwapWeapon){
             return;
         }
-
+        
         int previousWeapon = selectedWeapon;
 
         if(Input.GetAxis("Mouse ScrollWheel") > 0f){
