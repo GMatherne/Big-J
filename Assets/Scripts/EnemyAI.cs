@@ -91,7 +91,6 @@ public class EnemyAI : MonoBehaviour
             Rigidbody rigidBody = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
            
             rigidBody.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rigidBody.AddForce(transform.up * 8f, ForceMode.Impulse);
 
             alreadyAttacked = true;
 
