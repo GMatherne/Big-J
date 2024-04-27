@@ -11,7 +11,7 @@ public class EnemyAI : MonoBehaviour
 
     public GameObject enemy;
     private Renderer enemyRenderer;
-    private float redValue;
+    private Color32 enemyColor;
 
     public LayerMask ground;
     public LayerMask playerLayer;
@@ -34,12 +34,13 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake(){
 
-        redValue = 0f;
         health = totalHealth;
+
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
-        enemyRenderer = enemy.GetComponent<Renderer>();
 
+        enemyRenderer = enemy.GetComponent<Renderer>();
+        enemyColor = enemyRenderer.material.color;
     }
 
     private void Update(){
@@ -99,7 +100,7 @@ public class EnemyAI : MonoBehaviour
 
             Rigidbody rigidBody = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
            
-            rigidBody.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rigidBody.AddForce(transform.forward * 5f, ForceMode.Impulse);
 
             alreadyAttacked = true;
 
@@ -126,8 +127,10 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void ChangeColor(){
-        redValue = 1 - health/totalHealth;
-        enemyRenderer.material.SetColor("_Color", new Color(redValue, 0f, 0f));
+        enemyColor.r = (byte)((1f - health / totalHealth) * 255f);
+        enemyColor.g = (byte)(health / totalHealth * enemyColor.g);
+        enemyColor.b = (byte)(health / totalHealth * enemyColor.b);
+        enemyRenderer.material.SetColor("_Color", new Color(enemyColor.r / 255f, enemyColor.g / 255f, enemyColor.b / 255f));
     }
 
     private void DestroyEnemy(){
