@@ -7,34 +7,33 @@ public class SliderManager : MonoBehaviour
 {
     public Slider xSensitivitySlider;
     public Slider ySensitivitySlider;
-    public Slider soundEffectsVolumeSlider;
+    public Slider soundVolumeSlider;
     public Slider musicVolumeSlider;
 
-    public AudioMixer soundEffectsMixer;
-    public AudioMixer musicMixer;
+    public AudioMixer audioMixer;
 
     private void Start(){
-        xSensitivitySlider.value = GameManager.xSensitivityMultiplier;
-        ySensitivitySlider.value = GameManager.ySensitivityMultiplier;
-        musicVolumeSlider.value = GameManager.musicVolume;
-        soundEffectsVolumeSlider.value = GameManager.soundEffectsVolume;
+        xSensitivitySlider.value = GameManager.Instance.xSensitivityMultiplier;
+        ySensitivitySlider.value = GameManager.Instance.ySensitivityMultiplier;
+        musicVolumeSlider.value = GameManager.Instance.musicVolume;
+        soundVolumeSlider.value = GameManager.Instance.soundVolume;
     }
 
     public void SetXSensitivity(float sensitivity){
-        GameManager.xSensitivityMultiplier = sensitivity;
+        GameManager.Instance.xSensitivityMultiplier = sensitivity;
     }
 
     public void SetYSensitivity(float sensitivity){
-        GameManager.ySensitivityMultiplier = sensitivity;
+        GameManager.Instance.ySensitivityMultiplier = sensitivity;
     }
 
     public void SetSoundEffectsVolume(float volume){
-        GameManager.soundEffectsVolume = volume;
-        soundEffectsMixer.SetFloat("SoundEffectsMixerVolume", MathF.Log10(volume) * 20f);
+        GameManager.Instance.soundVolume = volume;
+        audioMixer.SetFloat("SoundVolume", MathF.Log10(volume) * 20f + GameManager.Instance.mixerOffset);
     }
 
     public void SetMusicVolume(float volume){
-        GameManager.musicVolume = volume;
-        musicMixer.SetFloat("MusicMixerVolume", MathF.Log10(volume) * 20f);
+        GameManager.Instance.musicVolume = volume;
+        audioMixer.SetFloat("MusicVolume", MathF.Log10(volume) * 20f + GameManager.Instance.mixerOffset);
     }
 }

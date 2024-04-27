@@ -20,8 +20,12 @@ public class GunSystem : MonoBehaviour
 
     public GameObject muzzleFlash;
 
+    public AudioSource audioSource;
+
+    public AudioClip shootSoundEffect;
+
     private void Start(){
-        Invoke(nameof(ResetShot), GameManager.weaponSwapShootingCooldown);
+        Invoke(nameof(ResetShot), GameManager.Instance.weaponSwapShootingCooldown);
     }
 
     private void Update(){
@@ -31,12 +35,12 @@ public class GunSystem : MonoBehaviour
     private void ShootingInput(){
 
         if(fullyAutomatic){
-            shooting = Input.GetKey(GameManager.shootKey);
+            shooting = Input.GetKey(GameManager.Instance.shootKey);
         }else{
-            shooting = Input.GetKeyDown(GameManager.shootKey);
+            shooting = Input.GetKeyDown(GameManager.Instance.shootKey);
         }
 
-        if(GameManager.ableToShoot && shooting){
+        if(GameManager.Instance.ableToShoot && shooting && !GameManager.Instance.paused){
             Shoot();
         }
 
@@ -44,8 +48,8 @@ public class GunSystem : MonoBehaviour
 
     private void Shoot(){
 
-        GameManager.ableToSwapWeapon = false;
-        GameManager.ableToShoot = false;
+        GameManager.Instance.ableToSwapWeapon = false;
+        GameManager.Instance.ableToShoot = false;
 
         float xBulletSpread = Random.Range(-spread, spread);
         float yBulletSpread = Random.Range(-spread, spread);
@@ -54,16 +58,15 @@ public class GunSystem : MonoBehaviour
 
         if(Physics.Raycast(camera.transform.position, direction, out rayHit, range, enemy)){
 
-            Debug.Log(rayHit.collider.name);
-
             if(rayHit.collider.CompareTag("Enemy")){
-                Debug.Log("Hit enemy");
                 rayHit.collider.GetComponent<EnemyAI>().TakeDamage(damage);
             }
 
         }
 
         Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity, attackPoint.transform);
+
+        audioSource.PlayOneShot(shootSoundEffect);
 
         Invoke(nameof(ResetShot), fireRate);
 
@@ -73,8 +76,8 @@ public class GunSystem : MonoBehaviour
     }
 
     private void ResetShot(){
-        GameManager.ableToShoot = true;
-        GameManager.ableToSwapWeapon = true;
+        GameManager.Instance.ableToShoot = true;
+        GameManager.Instance.ableToSwapWeapon = true;
     }
 
 }

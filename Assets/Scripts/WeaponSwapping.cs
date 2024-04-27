@@ -13,7 +13,7 @@ public class WeaponSwapping : MonoBehaviour
 
     private void Update(){
         
-        if(!GameManager.ableToSwapWeapon || GameManager.paused){
+        if(!GameManager.Instance.ableToSwapWeapon || GameManager.Instance.paused){
             return;
         }
         
@@ -42,8 +42,8 @@ public class WeaponSwapping : MonoBehaviour
         if(previousWeapon != selectedWeapon){
             SelectWeapon();
 
-            GameManager.ableToShoot = false;
-            Invoke(nameof(ResetShot), GameManager.weaponSwapShootingCooldown);
+            GameManager.Instance.ableToShoot = false;
+            Invoke(nameof(ResetShot), GameManager.Instance.weaponSwapShootingCooldown);
 
         }
 
@@ -65,6 +65,6 @@ public class WeaponSwapping : MonoBehaviour
     }
 
     private void ResetShot(){
-        GameManager.ableToShoot = true;
+        GameManager.Instance.ableToShoot = true;
     }
 }

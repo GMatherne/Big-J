@@ -9,9 +9,11 @@ public class PauseMenu : MonoBehaviour
     public GameObject settingsScreen;
     public GameObject reticle;
 
+    public AudioSource audioSource;
+
     private void Update(){
-        if(Input.GetKeyDown(GameManager.pauseKey)){
-            if(GameManager.paused){
+        if(Input.GetKeyDown(GameManager.Instance.pauseKey)){
+            if(GameManager.Instance.paused){
                 Resume();
             }else{
                 Pause();
@@ -20,6 +22,9 @@ public class PauseMenu : MonoBehaviour
     }
 
     private void Resume(){
+
+        audioSource.UnPause();
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -27,6 +32,8 @@ public class PauseMenu : MonoBehaviour
     }
 
     private void Pause(){
+
+        audioSource.Pause();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -36,7 +43,7 @@ public class PauseMenu : MonoBehaviour
         
         Time.timeScale = 0f;
 
-        GameManager.paused = true;
+        GameManager.Instance.paused = true;
     }
 
     public void Unfreeze(){
@@ -47,7 +54,7 @@ public class PauseMenu : MonoBehaviour
         
         Time.timeScale = 1f;
 
-        GameManager.paused = false;
+        GameManager.Instance.paused = false;
     }
 
     public void RestartPressed(){

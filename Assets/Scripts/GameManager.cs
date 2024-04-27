@@ -6,41 +6,32 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public static int levelsUnlocked;
+    [Header("Game")]
+    public int levelsUnlocked;
+    public bool paused;
 
-    public static float musicVolume;
-    public static float soundEffectsVolume;
+    [Header("Audio")]
+    public float musicVolume;
+    public float soundVolume;
+    public float mixerOffset;
+
+    public AudioMixer audioMixer;
     
-    public static float xSensitivityMultiplier;
-    public static float ySensitivityMultiplier;
+    [Header("Controls")]
+    public float xSensitivityMultiplier;
+    public float ySensitivityMultiplier;
 
-    public AudioMixer soundEffectsMixer;
-    public AudioMixer musicMixer;
+    public KeyCode pauseKey = KeyCode.Escape;
+    public KeyCode shootKey = KeyCode.Mouse0;
 
-    public static bool paused;
-
-    public static KeyCode pauseKey = KeyCode.Escape;
-    public static KeyCode shootKey = KeyCode.Mouse0;
-
-    public static bool ableToSwapWeapon;
-    public static float weaponSwapShootingCooldown;
-    public static bool ableToShoot;
+    [Header("Shooting")]
+    public float weaponSwapShootingCooldown;
+    public bool ableToShoot;
+    public bool ableToSwapWeapon;
 
     private void Start(){
-        levelsUnlocked = 1;
-
-        musicVolume = 0.5f;
-        soundEffectsVolume = 0.5f;
-        
-        xSensitivityMultiplier = 1.05f;
-        ySensitivityMultiplier = 1.05f;
-
-        soundEffectsMixer.SetFloat("SoundEffectsMixerVolume", MathF.Log10(0.5f) * 20f);
-        musicMixer.SetFloat("MusicMixerVolume", MathF.Log10(0.5f) * 20f);
-
-        weaponSwapShootingCooldown = 0.2f;
-        ableToSwapWeapon = true;
-        ableToShoot = false;
+        audioMixer.SetFloat("SoundVolume", MathF.Log10(soundVolume) * 20f + mixerOffset);
+        audioMixer.SetFloat("MusicVolume", MathF.Log10(musicVolume) * 20f + mixerOffset);
     }
 
     private void Awake()
