@@ -11,4 +11,6 @@ public class DecalDestroyer : MonoBehaviour {
 		yield return new WaitForSeconds(lifeTime);
 		Destroy(gameObject);
 	}
+
+	
 }

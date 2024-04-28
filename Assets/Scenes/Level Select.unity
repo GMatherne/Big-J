@@ -4525,7 +4525,7 @@ MonoBehaviour:
   paused: 0
   musicVolume: 0.5
   soundVolume: 0.5
-  mixerOffset: 6
+  mixerOffset: -70
   audioMixer: {fileID: 24100000, guid: 60aaef4f8ead87f42816f5da8ac7d725, type: 2}
   xSensitivityMultiplier: 1.05
   ySensitivityMultiplier: 1.05

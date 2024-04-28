@@ -3,12 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-
+    [Header("Paused Canvas")]
     public GameObject pauseMenuUI;
     public GameObject pauseScreen;
     public GameObject settingsScreen;
+
+    [Header("Game Canvas")]
     public GameObject reticle;
 
+    [Header("Audio")]
     public AudioSource audioSource;
 
     private void Update(){

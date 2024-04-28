@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask ground;
+    public LayerMask obstacles;
     private bool grounded;
 
     [Header("Keybinds")]
@@ -34,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update(){
 
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, ground);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, ground) || Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, obstacles);
 
         GetInput();
         LimitSpeed();

@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    [Header("Sensitivity")]
     public float XSens;
     public float YSens;
 
+    [Header("Orientation")]
     public Transform orientation;
 
     private float XRotation;

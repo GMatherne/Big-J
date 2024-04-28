@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class SliderManager : MonoBehaviour
 {
+    [Header("Sliders")]
     public Slider xSensitivitySlider;
     public Slider ySensitivitySlider;
     public Slider soundVolumeSlider;
     public Slider musicVolumeSlider;
 
+    [Header("Audio")]
     public AudioMixer audioMixer;
 
     private void Start(){

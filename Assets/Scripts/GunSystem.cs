@@ -1,23 +1,29 @@
+using System.Collections;
 using UnityEngine;
 
 public class GunSystem : MonoBehaviour
 {
     
+    [Header("Gun Stats")]
     public int damage;
     public float fireRate;
     public float spread;
     public float range;
-    public float timeBetweenShots;
-    public int bulletsPerShot;
+    //public float timeBetweenShots;
+    //public int bulletsPerShot;
     public bool fullyAutomatic;
 
     private bool shooting;
 
+    [Header("Attack Point")]
     public new Camera camera;
     public Transform attackPoint;
     public RaycastHit rayHit;
+
+    [Header("Enemy")]
     public LayerMask enemy;
 
+    [Header("Effects")]
     public GameObject muzzleFlash;
 
     public AudioSource audioSource;
@@ -70,9 +76,11 @@ public class GunSystem : MonoBehaviour
 
         Invoke(nameof(ResetShot), fireRate);
 
+        /*
         for(int i = 1; i < bulletsPerShot; i++){
             Invoke(nameof(Shoot), timeBetweenShots);
         }
+        */
     }
 
     private void ResetShot(){

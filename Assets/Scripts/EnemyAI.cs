@@ -3,20 +3,27 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
+    [Header("Game Objects")]
     public NavMeshAgent agent;
 
     public Transform player;
 
     public GameObject projectile;
 
-    public GameObject enemy;
+    [Header("Visual")]
+    public GameObject body;
     private Renderer enemyRenderer;
     private Color32 enemyColor;
+    public bool changeColorWhenHit;
+    public bool changeColor;
 
+    [Header("Layers")]
     public LayerMask ground;
     public LayerMask playerLayer;
 
+    [Header("Attacking")]
     public Vector3 searchPoint;
+    public Transform attackPoint;
     private bool searchPointSet;
     public float searchRange;
 
@@ -26,11 +33,16 @@ public class EnemyAI : MonoBehaviour
     public float sightRange;
     public float attackRange;
 
+    public float projectilePower;
+
+    public bool lookAtPlayer;
+
     private bool playerInSightRange;
     private bool playerInAttackRange;
 
-    private float health;
+    [Header("Stats")]
     public float totalHealth;
+    private float health;
 
     private void Awake(){
 
@@ -39,7 +51,7 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
 
-        enemyRenderer = enemy.GetComponent<Renderer>();
+        enemyRenderer = body.GetComponent<Renderer>();
         enemyColor = enemyRenderer.material.color;
     }
 
@@ -94,13 +106,17 @@ public class EnemyAI : MonoBehaviour
 
         agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
+        if(lookAtPlayer){
+            transform.LookAt(player);
+        }else{
+            attackPoint.LookAt(player);
+        }
 
         if(!alreadyAttacked){
 
-            Rigidbody rigidBody = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            Rigidbody rigidBody = Instantiate(projectile, attackPoint.position, Quaternion.identity).GetComponent<Rigidbody>();
            
-            rigidBody.AddForce(transform.forward * 5f, ForceMode.Impulse);
+            rigidBody.AddForce(attackPoint.forward * projectilePower, ForceMode.Impulse);
 
             alreadyAttacked = true;
 
@@ -114,8 +130,6 @@ public class EnemyAI : MonoBehaviour
 
     public void TakeDamage(int damage){
 
-        enemyRenderer.material.SetColor("_Color", new Color(1f, 0f, 0f));
-
         health -= damage;
 
         if(health <= 0){
@@ -123,13 +137,23 @@ public class EnemyAI : MonoBehaviour
             Invoke(nameof(DestroyEnemy), .1f);
         }
 
+        if(!changeColorWhenHit){
+            return;
+        }
+
+        enemyRenderer.material.SetColor("_Color", new Color(1f, 0f, 0f));
+
         Invoke(nameof(ChangeColor), .1f);
     }
 
     private void ChangeColor(){
-        enemyColor.r = (byte)((1f - health / totalHealth) * 255f);
-        enemyColor.g = (byte)(health / totalHealth * enemyColor.g);
-        enemyColor.b = (byte)(health / totalHealth * enemyColor.b);
+
+        if(changeColor){
+            enemyColor.r = (byte)((1f - health / totalHealth) * 255f);
+            enemyColor.g = (byte)(health / totalHealth * enemyColor.g);
+            enemyColor.b = (byte)(health / totalHealth * enemyColor.b);
+        }
+        
         enemyRenderer.material.SetColor("_Color", new Color(enemyColor.r / 255f, enemyColor.g / 255f, enemyColor.b / 255f));
     }
 
