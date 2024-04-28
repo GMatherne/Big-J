@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     public float lifeTime;
+    public float health;
 
 	private IEnumerator Start(){
 		yield return new WaitForSeconds(lifeTime);
@@ -16,4 +17,12 @@ public class BulletScript : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float damage){
+
+        health -= damage;
+
+        if(health <= 0){
+            Destroy(gameObject);
+        }
+    }
 }

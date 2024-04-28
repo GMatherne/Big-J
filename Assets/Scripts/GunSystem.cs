@@ -20,8 +20,9 @@ public class GunSystem : MonoBehaviour
     public Transform attackPoint;
     public RaycastHit rayHit;
 
-    [Header("Enemy")]
+    [Header("Layers")]
     public LayerMask enemy;
+    public LayerMask bullet;
 
     [Header("Effects")]
     public GameObject muzzleFlash;
@@ -62,7 +63,13 @@ public class GunSystem : MonoBehaviour
 
         Vector3 direction = camera.transform.forward + new Vector3(xBulletSpread, yBulletSpread, 0);
 
-        if(Physics.Raycast(camera.transform.position, direction, out rayHit, range, enemy)){
+        if(Physics.Raycast(camera.transform.position, direction, out rayHit, range, bullet)){
+
+            if(rayHit.collider.CompareTag("Bullet")){
+                rayHit.collider.GetComponent<Bullet>().TakeDamage(damage);
+            }
+
+        }else if(Physics.Raycast(camera.transform.position, direction, out rayHit, range, enemy)){
 
             if(rayHit.collider.CompareTag("Enemy")){
                 rayHit.collider.GetComponent<EnemyAI>().TakeDamage(damage);

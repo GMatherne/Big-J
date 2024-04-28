@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -27,7 +28,7 @@ public class EnemyAI : MonoBehaviour
     private bool searchPointSet;
     public float searchRange;
 
-    public float timeBetweenAttacks;
+    public float fireRate;
     private bool alreadyAttacked;
 
     public float sightRange;
@@ -35,36 +36,73 @@ public class EnemyAI : MonoBehaviour
 
     public float projectilePower;
 
-    public bool lookAtPlayer;
-
     private bool playerInSightRange;
     private bool playerInAttackRange;
 
     [Header("Stats")]
     public float totalHealth;
     private float health;
+    public bool moves;
+    public bool attacks;
+    public bool lookAtPlayer;
+
+    [Header("Stages")]
+    public bool stages;
+    public Material stage1;
+    public Material stage2;
+    public Material stage3;
+    private float threshold1;
+    private float threshold2;
+    private float threshold3;
+    public float bulletHealth1;
+    public float bulletHealth2;
+    public float bulletHealth3;
+    public float fireRate1;
+    public float fireRate2;
+    public float fireRate3;
+    public float fireRateChangeDelay;
+    private Bullet bullet;
 
     private void Awake(){
 
+        bullet = projectile.GetComponent<Bullet>();
+
         health = totalHealth;
 
+        threshold1 = health / 3f * 2f;
+        threshold2 = health / 3f;
+        threshold3 = 0;
+
         player = GameObject.Find("Player").transform;
-        agent = GetComponent<NavMeshAgent>();
+
+        if(moves){
+            agent = GetComponent<NavMeshAgent>();
+        }
 
         enemyRenderer = body.GetComponent<Renderer>();
         enemyColor = enemyRenderer.material.color;
+
+        if(stages){
+            enemyRenderer.material = stage1;
+            bullet.health = bulletHealth1;
+            fireRate = fireRate1;
+        }
     }
 
     private void Update(){
 
+        if(!(moves || attacks)){
+            return;
+        }
+
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
-        if(!playerInSightRange && !playerInAttackRange){
+        if(!playerInSightRange && !playerInAttackRange && moves){
             Searching();
-        }else if(playerInSightRange && !playerInAttackRange){
+        }else if(playerInSightRange && !playerInAttackRange && moves){
             ChasePlayer();
-        }else{
+        }else if(attacks && playerInAttackRange){
             AttackPlayer();
         }
     }
@@ -104,7 +142,9 @@ public class EnemyAI : MonoBehaviour
 
     private void AttackPlayer(){
 
-        agent.SetDestination(transform.position);
+        if(moves){
+            agent.SetDestination(transform.position);
+        }
 
         if(lookAtPlayer){
             transform.LookAt(player);
@@ -120,7 +160,7 @@ public class EnemyAI : MonoBehaviour
 
             alreadyAttacked = true;
 
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            Invoke(nameof(ResetAttack), fireRate);
         }
     }
 
@@ -131,6 +171,37 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(int damage){
 
         health -= damage;
+
+        if(stages){
+            if(health >= threshold1){
+
+                enemyRenderer.material = stage1;
+                bullet.health = bulletHealth1;
+
+                if(fireRate != fireRate1){
+                    fireRate = fireRate1;
+                }
+
+            }else if(health >= threshold2){
+
+                enemyRenderer.material = stage2;
+                bullet.health = bulletHealth2;
+                
+                if(fireRate != fireRate2){
+                    StartCoroutine(ChangeFireRate(fireRate2, fireRateChangeDelay));
+                }
+
+            }else if(health >= threshold3){
+
+                enemyRenderer.material = stage3;
+                bullet.health = bulletHealth3;
+                
+                if(fireRate != fireRate3){
+                    StartCoroutine(ChangeFireRate(fireRate3, fireRateChangeDelay));
+                }
+
+            }
+        }
 
         if(health <= 0){
             health = 0;
@@ -144,6 +215,11 @@ public class EnemyAI : MonoBehaviour
         enemyRenderer.material.SetColor("_Color", new Color(1f, 0f, 0f));
 
         Invoke(nameof(ChangeColor), .1f);
+    }
+
+    private IEnumerator ChangeFireRate(float f, float waitTime){
+        yield return new WaitForSeconds(waitTime);
+        fireRate = f;
     }
 
     private void ChangeColor(){

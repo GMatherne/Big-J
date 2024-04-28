@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5373795427402923621}
   m_Layer: 10
   m_Name: GruntProjectile
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,3 +169,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 2
+  health: 5
